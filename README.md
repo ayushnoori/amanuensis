@@ -12,10 +12,13 @@ First, create a new Anaconda environment. For example:
 conda create --name amanuensis python=3.10
 ```
 
+## Dependencies
+* [R](https://www.r-project.org/), tested with version == 4.2.1.
+* [Python](https://www.python.org), tested with version == 3.10.9.
+
 ## BioGPT Dependencies
 For inference, we use the [BioGPT: Generative Pre-trained Transformer for Biomedical Text Generation and Mining](https://academic.oup.com/bib/advance-article/doi/10.1093/bib/bbac409/6713511?guestAccessKey=a66d9b5d-4f83-4017-bb52-405815c907b9) model by Luo *et al.*, 2022. Thus, the dependencies mirror those of [microsoft/BioGPT](https://github.com/microsoft/BioGPT) commit [f186d88](https://github.com/microsoft/BioGPT/commit/f186d88c43c8e7f984285c96d194045ce0e269c6). These include:
 
-* [Python](https://www.python.org), tested with version == 3.10.9.
 * [PyTorch](https://pytorch.org/) version == 1.13.1.
 * [transformers](https://huggingface.co/docs/transformers/index), which provides APIs and tools to easily download and train state-of-the-art pretrained models. 
 
