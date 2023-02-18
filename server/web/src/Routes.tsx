@@ -7,7 +7,7 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route } from '@redwoodjs/router'
+import { Router, Route } from '@redwoodjs/router';
 
 const Routes = () => {
   return (
@@ -15,7 +15,7 @@ const Routes = () => {
       <Route path="/speech-test" page={SpeechTestPage} name="speechTest" />
       <Route notfound page={NotFoundPage} />
     </Router>
-  )
-}
+  );
+};
 
-export default Routes
+export default Routes;

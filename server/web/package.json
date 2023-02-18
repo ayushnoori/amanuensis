@@ -13,6 +13,7 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/pro-theme": "^0.0.63",
     "@chakra-ui/react": "^1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
@@ -26,6 +27,7 @@
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-icons": "^4.7.1",
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.13.11"
   },

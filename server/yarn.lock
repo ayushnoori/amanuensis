@@ -1959,6 +1959,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/anatomy@npm:2.1.1":
+  version: 2.1.1
+  resolution: "@chakra-ui/anatomy@npm:2.1.1"
+  checksum: 14c1e94c8ce3cfef8999ff5febff3b77714b33e79dec8f77c1ade2547413814852a62f8753fcc6088ea33a3fc671ccb2f5384ed836a19cfacbdabeff66dc56da
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/avatar@npm:1.3.11":
   version: 1.3.11
   resolution: "@chakra-ui/avatar@npm:1.3.11"
@@ -2350,6 +2357,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/pro-theme@npm:^0.0.63":
+  version: 0.0.63
+  resolution: "@chakra-ui/pro-theme@npm:0.0.63"
+  dependencies:
+    "@chakra-ui/styled-system": 2.5.1
+    "@chakra-ui/theme-tools": 2.0.16
+  checksum: 8b78e38aae49eec3623f8a4021beba530aea8b0d75bb6138cfb623ea04346f4e7c63ffd4633a0c239a3f6037dd332453ac44b627502c3bf1916c05df48b06c67
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/progress@npm:1.2.6":
   version: 1.2.6
   resolution: "@chakra-ui/progress@npm:1.2.6"
@@ -2494,6 +2511,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@chakra-ui/shared-utils@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@chakra-ui/shared-utils@npm:2.0.4"
+  checksum: 05eee356ac023068d1113beb2259b5e02a95d08546e692edae60e225b2b6034eaa5a517f013c51c8f069467963bb185bb36b85f0ca00498ef33c5bb56b32f87d
+  languageName: node
+  linkType: hard
+
 "@chakra-ui/skeleton@npm:1.2.14":
   version: 1.2.14
   resolution: "@chakra-ui/skeleton@npm:1.2.14"
@@ -2577,6 +2601,17 @@ __metadata:
     "@chakra-ui/utils": 1.10.4
     csstype: 3.0.9
   checksum: 95e0f651c15e99269ac00476a0f23dbc8d091aacaedb25b05e86abdab52b9e967f400b041e862afa0a46ffad71a184888eeba7354e4e81a9e600942f371a4400
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/styled-system@npm:2.5.1":
+  version: 2.5.1
+  resolution: "@chakra-ui/styled-system@npm:2.5.1"
+  dependencies:
+    "@chakra-ui/shared-utils": 2.0.4
+    csstype: ^3.0.11
+    lodash.mergewith: 4.6.2
+  checksum: 55bab4c8510af47e00614ef82756bebe4dfd46a03b1d06a9d075bf796f7b011f9dcf1d92adf22d91922ea3f316871259f80840966fd4875f7b38a3e16bf281f9
   languageName: node
   linkType: hard
 
@@ -2674,6 +2709,19 @@ __metadata:
   peerDependencies:
     "@chakra-ui/system": ">=1.0.0"
   checksum: 4ca8146ed6bec51e86e235bfad4269ebf345ace862ea31668b9df11c6b6b1303abd715d656f670a408a14ccb3cf3e773d77043b3232c20dcb88a799661349c9e
+  languageName: node
+  linkType: hard
+
+"@chakra-ui/theme-tools@npm:2.0.16":
+  version: 2.0.16
+  resolution: "@chakra-ui/theme-tools@npm:2.0.16"
+  dependencies:
+    "@chakra-ui/anatomy": 2.1.1
+    "@chakra-ui/shared-utils": 2.0.4
+    color2k: ^2.0.0
+  peerDependencies:
+    "@chakra-ui/styled-system": ">=2.0.0"
+  checksum: 2860d9fd3d0cf2e8f1536a46cc85662512f78bc26a96343e41fabaa1e62429c5e3fc55d7da1c30b23d1899e5c96a0e90abb0053639a82095bb010b55c5e597f5
   languageName: node
   linkType: hard
 
@@ -11418,6 +11466,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"color2k@npm:^2.0.0":
+  version: 2.0.2
+  resolution: "color2k@npm:2.0.2"
+  checksum: 625345d11566010290790101ca45be93fa0e2685906650d672de32abc3098dd02c5a3700d288de2e9e621d34f4619b8accf18a450e402f837bcd48f658727678
+  languageName: node
+  linkType: hard
+
 "colord@npm:^2.9.1":
   version: 2.9.3
   resolution: "colord@npm:2.9.3"
@@ -12320,7 +12375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2":
+"csstype@npm:^3.0.11, csstype@npm:^3.0.2":
   version: 3.1.1
   resolution: "csstype@npm:3.1.1"
   checksum: 7c8b8c5923049d84132581c13bae6e1faf999746fe3998ba5f3819a8e1cdc7512ace87b7d0a4a69f0f4b8ba11daf835d4f1390af23e09fc4f0baad52c084753a
@@ -21625,6 +21680,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-icons@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "react-icons@npm:4.7.1"
+  peerDependencies:
+    react: "*"
+  checksum: be1d82522feba668df7d6f4d1f6ea59f4d5aca58f761790a5e08fcef50ef27d563a9fe78d803576fa64910607172886d559f6ad1cd9c7857b683b4e16eb50eea
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^5.1.0":
   version: 5.1.1
   resolution: "react-inspector@npm:5.1.1"
@@ -25488,6 +25552,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
+    "@chakra-ui/pro-theme": ^0.0.63
     "@chakra-ui/react": ^1
     "@chakra-ui/storybook-addon": ^4.0.16
     "@emotion/react": ^11
@@ -25502,6 +25567,7 @@ __metadata:
     prop-types: 15.8.1
     react: 17.0.2
     react-dom: 17.0.2
+    react-icons: ^4.7.1
     react-speech-recognition: ^3.10.0
     regenerator-runtime: ^0.13.11
   languageName: unknown

@@ -1,6 +1,6 @@
-import { render } from '@redwoodjs/testing/web'
+import { render } from '@redwoodjs/testing/web';
 
-import SpeechTestPage from './SpeechTestPage'
+import SpeechTestPage from './SpeechTestPage';
 
 //   Improve this test with help from the Redwood Testing Doc:
 //   https://redwoodjs.com/docs/testing#testing-pages-layouts
@@ -8,7 +8,7 @@ import SpeechTestPage from './SpeechTestPage'
 describe('SpeechTestPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<SpeechTestPage />)
-    }).not.toThrow()
-  })
-})
+      render(<SpeechTestPage />);
+    }).not.toThrow();
+  });
+});

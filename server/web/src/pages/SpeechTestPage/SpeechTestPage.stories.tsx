@@ -1,12 +1,12 @@
-import type { ComponentMeta } from '@storybook/react'
+import type { ComponentMeta } from '@storybook/react';
 
-import SpeechTestPage from './SpeechTestPage'
+import SpeechTestPage from './SpeechTestPage';
 
 export const generated = () => {
-  return <SpeechTestPage />
-}
+  return <SpeechTestPage />;
+};
 
 export default {
   title: 'Pages/SpeechTestPage',
   component: SpeechTestPage,
-} as ComponentMeta<typeof SpeechTestPage>
+} as ComponentMeta<typeof SpeechTestPage>;

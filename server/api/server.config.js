@@ -20,7 +20,7 @@ const config = {
     // the default non-development level to `info`
     level: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
   },
-}
+};
 
 /**
  * You can also register Fastify plugins and additional routes for the API and Web sides
@@ -36,17 +36,17 @@ const config = {
 /** @type {import('@redwoodjs/api-server/dist/fastify').FastifySideConfigFn} */
 const configureFastify = async (fastify, options) => {
   if (options.side === 'api') {
-    fastify.log.info({ custom: { options } }, 'Configuring api side')
+    fastify.log.info({ custom: { options } }, 'Configuring api side');
   }
 
   if (options.side === 'web') {
-    fastify.log.info({ custom: { options } }, 'Configuring web side')
+    fastify.log.info({ custom: { options } }, 'Configuring web side');
   }
 
-  return fastify
-}
+  return fastify;
+};
 
 module.exports = {
   config,
   configureFastify,
-}
+};
