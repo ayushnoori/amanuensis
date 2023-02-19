@@ -13,3 +13,6 @@ fairseq/*
 fastBPE/*
 mosesdecoder/*
 .Rproj.user
+
+# ignore secret key
+secrets/*
