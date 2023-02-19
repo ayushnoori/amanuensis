@@ -7,7 +7,9 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Set, Router, Route } from '@redwoodjs/router';
+import { Set, Router, Route } from '@redwoodjs/router'
+
+import ScaffoldLayout from 'src/layouts/ScaffoldLayout';
 
 import DoctorDashboardLayout from './layouts/DoctorDashboardLayout/DoctorDashboardLayout';
 import PatientDashboardLayout from './layouts/PatientDashboardLayout/PatientDashboardLayout';
@@ -15,6 +17,8 @@ import PatientDashboardLayout from './layouts/PatientDashboardLayout/PatientDash
 const Routes = () => {
   return (
     <Router>
+      <Set wrap={ScaffoldLayout} title="WorkflowPrompts" titleTo="workflowPrompts" buttonLabel="New WorkflowPrompt" buttonTo="newWorkflowPrompt">
+      </Set>
       <Set wrap={PatientDashboardLayout}>
         <Route path="/patients/{id:String}" page={SpeechTestPage} name="speechTest" />
       </Set>
