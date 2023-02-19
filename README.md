@@ -108,6 +108,18 @@ After constructing the PostgreSQL database, in the `psql` terminal, connect to t
 \d
 ```
 
+To remove all tables from the database, the following SQL command can be used.
+```sql
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO public;
+```
+
+The database can be dumped for transfer by running the following in the Terminal.
+```bash
+pg_dump --dbname amanuensis > ./patient_data/db_dump/db_dump.sql
+```
+
 # BioGPT
 For inference, we can also use the [BioGPT: Generative Pre-trained Transformer for Biomedical Text Generation and Mining](https://academic.oup.com/bib/advance-article/doi/10.1093/bib/bbac409/6713511?guestAccessKey=a66d9b5d-4f83-4017-bb52-405815c907b9) model by Luo *et al.*, 2022. Thus, the dependencies mirror those of [microsoft/BioGPT](https://github.com/microsoft/BioGPT) commit [f186d88](https://github.com/microsoft/BioGPT/commit/f186d88c43c8e7f984285c96d194045ce0e269c6). These include:
 
