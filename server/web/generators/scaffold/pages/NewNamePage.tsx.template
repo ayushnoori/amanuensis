@@ -1,0 +1,5 @@
+import New${singularPascalName} from '${importComponentNewName}';
+
+export default function New${singularPascalName}Page() {
+  return <New${singularPascalName} />;
+}

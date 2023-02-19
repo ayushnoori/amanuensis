@@ -410,7 +410,7 @@ model Supplies {
 }
 
 // Custom Questions
-model WorkflowPrompts {
+model WorkflowPrompt {
   id String @id @default(uuid())
   name String
   prompt String

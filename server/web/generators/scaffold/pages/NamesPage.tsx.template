@@ -1,0 +1,5 @@
+import ${pluralPascalName}Cell from '${importComponentNamesCell}';
+
+export default function ${pluralPascalName}Page() {
+  return <${pluralPascalName}Cell />;
+}

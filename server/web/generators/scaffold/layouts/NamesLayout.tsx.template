@@ -1,0 +1,21 @@
+import { routes } from '@redwoodjs/router';
+
+import BaseModelNavigationLayout from 'src/layouts/BaseModelNavigationLayout/BaseModelNavigationLayout';
+
+type ${singularPascalName}LayoutProps = {
+  children: React.ReactNode
+};
+
+export default function ${pluralPascalName}Layout({ children }: ${singularPascalName}LayoutProps) {
+  return (
+    <BaseModelNavigationLayout
+      headingText="${pluralPascalName}"
+      newButtonText="${singularPascalName}"
+      subheadingText="${singularPascalName} information"
+      headingRoute={routes.${pluralRouteName}()}
+      newModelRoute={routes.${newRouteName}()}
+    >
+      {children}
+    </BaseModelNavigationLayout>
+  );
+}

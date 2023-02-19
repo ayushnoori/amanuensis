@@ -1,0 +1,97 @@
+import { Divider, Flex, Stack } from '@chakra-ui/react';
+
+import { Form } from '@redwoodjs/forms';
+
+import CrEnumField from 'src/components/form/CrEnumField/CrEnumField';
+import CrFormError from 'src/components/form/CrFormError/CrFormError';
+import CrSubmit from 'src/components/form/CrSubmit/CrSubmit';
+import FormFieldWrapper from 'src/components/form/FormFieldWrapper/FormFieldWrapper';
+import {
+  ${fieldsToImport.map(n => 'Cr' + n).join(',\n  ')},
+} from 'src/components/form/input-fields';
+
+<% if (fieldsToImport.includes('DatetimeLocalField')) { %>
+const formatDatetime = (value) => {
+  if (value) {
+    return value.replace(/:\d{2}\.\d{3}\w/, '');
+  }
+};
+<% } %>
+
+export default function ${singularPascalName}Form(props) {
+  const onSubmit = (data) => {
+    <% editableColumns.forEach(column => { %>
+      <% if (column.isEnum && !column.isList && !column.isRequired) { %>
+        if (data.${column.name} === '') {
+          data.${column.name} = null;
+        }
+      <% } %>
+      <% if (column.isEnum && column.isList) { %>
+        if (data.${column.name}) {
+          data.${column.name} = data.${column.name}.filter((value) => !!value);
+      }
+      <% } %>
+    <% }) %>
+    props.onSave(data, props?.${singularCamelName}?.id);
+  };
+
+  return (
+    <Form onSubmit={onSubmit} error={props.error}>
+      <Stack spacing="5">
+        <Stack spacing="5" px={{ base: '4', md: '6' }}>
+          <CrFormError error={props.error} />
+          <% editableColumns.forEach(column => { %>
+            <% if (column.isEnum) { %>
+              <FormFieldWrapper
+                name="${column.name}"
+                label="${column.label}"
+                validation={{ required: ${column.isRequired} }}
+              >
+                <CrEnumField
+                  componentType={Cr${column.component}}
+                  options={[
+                    <% if (!column.isRequired) { %>
+                      {
+                        id: '${singularCamelName}-${column.name}-none',
+                        name: '${column.name}',
+                        defaultValue: '',
+                        ${column.defaultProp}: !props.spot?.spotType,
+                        text: 'None',
+                        textColor: 'gray.600',
+                      },
+                    <% } %>
+                    <% column.values?.forEach((value, i) => {
+                      const columnComponentName = column.isList ? `${column.name}[${i}]` : column.name
+                    %>
+                      {
+                        id: '${singularCamelName}-${column.name}-${i}',
+                        name: '${columnComponentName}',
+                        defaultValue: '${value.name}',
+                        ${column.defaultProp}: props.${singularCamelName}?.${column.name}?.includes('${value.name}'),
+                        text: '${value.name.replace('_', ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}',
+                      },
+                    <% }) %>
+                  ]}
+                />
+              </FormFieldWrapper>
+            <% } else { %>
+              <FormFieldWrapper
+                name="${column.name}"
+                label="${column.label}"
+                fieldType={Cr${column.component}}
+                ${column.defaultProp}={${column.deserializeFunction && column.deserializeFunction + '('}props.${singularCamelName}?.<%= column.name %>${column.deserializeFunction && ')'}}
+                <%= !column.validation ? '' : `validation=${column.validation}` %>
+              />
+            <% } %>
+          <% }) %>
+        </Stack>
+        <Divider />
+        <Flex direction="row-reverse" px={{ base: '4', md: '6' }}>
+          <CrSubmit disabled={props.loading} colorScheme="blue">
+            Save
+          </CrSubmit>
+        </Flex>
+      </Stack>
+    </Form>
+  );
+}

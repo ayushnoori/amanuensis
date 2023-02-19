@@ -1,0 +1,26 @@
+import type { Find${singularPascalName}ById } from 'types/graphql';
+
+import type { CellSuccessProps } from '@redwoodjs/web';
+
+import ModelCellFailure from 'src/components/model-cell/ModelCellFailure/ModelCellFailure';
+import ModelCellLoading from 'src/components/model-cell/ModelCellLoading/ModelCellLoading';
+import ModelCellNotFound from 'src/components/model-cell/ModelCellNotFound/ModelCellNotFound';
+import ${singularPascalName} from '${importComponentName}';
+
+export const QUERY = gql`
+  query Find${singularPascalName}ById($id: ${idType}!) {
+    ${singularCamelName}: ${singularCamelName}(id: $id) {<% columns.forEach(column => { %>
+      <%= column.name %><% }) %>
+    }
+  }
+`;
+
+export const Loading = ModelCellLoading;
+
+export const Empty = () => <ModelCellNotFound modelNameSingular="${singularPascalName}" />;
+
+export const Failure = ModelCellFailure;
+
+export const Success = ({ ${singularCamelName} }: CellSuccessProps<Find${singularPascalName}ById>) => {
+  return <${singularPascalName} ${singularCamelName}={${singularCamelName}} />;
+};
