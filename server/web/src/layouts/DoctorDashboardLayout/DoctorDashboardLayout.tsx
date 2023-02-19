@@ -36,18 +36,7 @@ const DoctorDashboardLayout = ({ children }: DoctorDashboardLayoutProps) => {
         ],
       },
     ],
-    bottomGroups: [
-      {
-        id: 'settings',
-        links: [
-          {
-            label: 'Change Organization',
-            icon: FaExchangeAlt,
-            to: '/',
-          },
-        ],
-      },
-    ],
+    bottomGroups: [],
   };
 
   return (

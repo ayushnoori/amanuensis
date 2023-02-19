@@ -35,7 +35,7 @@ export default function SidebarUserProfile({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const logOut = () => navigate('/');
+  const logOut = () => navigate(routes.login());
 
   const globalRolesString = globalRoles
     ? Object.entries(globalRoles)
