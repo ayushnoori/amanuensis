@@ -9,22 +9,30 @@
 
 import { Set, Router, Route } from '@redwoodjs/router'
 
-import ScaffoldLayout from 'src/layouts/ScaffoldLayout';
 
-import DoctorDashboardLayout from './layouts/DoctorDashboardLayout/DoctorDashboardLayout';
-import PatientDashboardLayout from './layouts/PatientDashboardLayout/PatientDashboardLayout';
+import WorkflowPromptsLayout from 'src/layouts/WorkflowPromptsLayout/WorkflowPromptsLayout';
+import AuthenticationLayout from 'src/layouts/AuthenticationLayout/AuthenticationLayout';
+import DoctorDashboardLayout from 'src/layouts/DoctorDashboardLayout/DoctorDashboardLayout';
+import PatientDashboardLayout from 'src/layouts/PatientDashboardLayout/PatientDashboardLayout';
 
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={ScaffoldLayout} title="WorkflowPrompts" titleTo="workflowPrompts" buttonLabel="New WorkflowPrompt" buttonTo="newWorkflowPrompt">
-      </Set>
       <Set wrap={PatientDashboardLayout}>
-        <Route path="/patients/{id:String}" page={SpeechTestPage} name="speechTest" />
+        <Route path="/patients/{userId:String}" page={SpeechTestPage} name="speechTest" />
       </Set>
       <Set wrap={DoctorDashboardLayout}>
         <Route path="/doctor/speech-test" page={SpeechTestPage} name="speechTest" />
         <Route path="/doctor/workflows" page={SpeechTestPage} name="speechTest" />
+        <Set wrap={WorkflowPromptsLayout} title="WorkflowPrompts" titleTo="Workflow Prompts" buttonLabel="New Workflow Prompt" buttonTo="New Workflow Prompt">
+          <Route path="/doctor/workflow-prompts/new" page={WorkflowPromptNewWorkflowPromptPage} name="newWorkflowPrompt" />
+          <Route path="/doctor/workflow-prompts/{id}/edit" page={WorkflowPromptEditWorkflowPromptPage} name="editWorkflowPrompt" />
+          <Route path="/doctor/workflow-prompts/{id}" page={WorkflowPromptWorkflowPromptPage} name="workflowPrompt" />
+          <Route path="/doctor/workflow-prompts" page={WorkflowPromptWorkflowPromptsPage} name="workflowPrompts" />
+        </Set>
+      </Set>
+      <Set wrap={AuthenticationLayout}>
+        <Route path="/auth/login" page={LoginPage} name="login" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>

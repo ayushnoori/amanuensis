@@ -18,6 +18,7 @@ import {
 import humanize from 'humanize-string';
 
 import { CurrentUser } from '@redwoodjs/auth';
+import { navigate, routes } from '@redwoodjs/router';
 
 export type UserProfileProps = {
   user: CurrentUser & {
@@ -34,7 +35,7 @@ export default function SidebarUserProfile({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
 
-  const logOut = () => console.log('Logged Out');
+  const logOut = () => navigate('/');
 
   const globalRolesString = globalRoles
     ? Object.entries(globalRoles)

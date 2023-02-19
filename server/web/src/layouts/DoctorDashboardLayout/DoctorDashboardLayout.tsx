@@ -29,9 +29,9 @@ const DoctorDashboardLayout = ({ children }: DoctorDashboardLayoutProps) => {
         name: 'Workflows',
         links: [
           {
-            label: 'Analyses',
+            label: 'Prompts',
             icon: SiCodesandbox,
-            to: '/daw',
+            to: routes.workflowPrompts(),
           },
         ],
       },

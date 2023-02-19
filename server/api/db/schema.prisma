@@ -420,9 +420,9 @@ model PatientQuestion {
   id String @id @default(uuid())
   patientId String
   patient Patients @relation(fields: [patientId], references: [id])
-
   question String
   answer String?
   askedAt DateTime
   answeredAt DateTime
+  pertient Boolean
 }
