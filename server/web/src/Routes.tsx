@@ -9,13 +9,18 @@
 
 import { Set, Router, Route } from '@redwoodjs/router';
 
-import AdminDashboardLayout from 'src/layouts/AdminDashboardLayout/AdminDashboardLayout';
+import DoctorDashboardLayout from './layouts/DoctorDashboardLayout/DoctorDashboardLayout';
+import PatientDashboardLayout from './layouts/PatientDashboardLayout/PatientDashboardLayout';
 
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={AdminDashboardLayout}>
-        <Route path="/speech-test" page={SpeechTestPage} name="speechTest" />
+      <Set wrap={PatientDashboardLayout}>
+        <Route path="/patients/{id:String}" page={SpeechTestPage} name="speechTest" />
+      </Set>
+      <Set wrap={DoctorDashboardLayout}>
+        <Route path="/doctor/speech-test" page={SpeechTestPage} name="speechTest" />
+        <Route path="/doctor/workflows" page={SpeechTestPage} name="speechTest" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>

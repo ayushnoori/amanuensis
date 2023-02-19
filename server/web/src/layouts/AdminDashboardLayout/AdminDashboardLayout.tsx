@@ -1,5 +1,6 @@
 import { FaCity, FaExchangeAlt, FaUsers } from 'react-icons/fa';
 import { GiJigsawPiece, GiJigsawBox } from 'react-icons/gi';
+import { SiCodesandbox } from 'react-icons/si';
 
 import { routes } from '@redwoodjs/router';
 
@@ -12,18 +13,13 @@ type AdminDashboardLayoutProps = {
 
 const AdminDashboardLayout = ({ children }: AdminDashboardLayoutProps) => {
   const sidebarProps: SidebarProps = {
-    organizationName: 'Amanuensis',
+    organizationName: 'Stanford General Hospital',
     groups: [
       {
         id: 'general',
         links: [
           {
-            label: 'Organizations',
-            icon: FaCity,
-            to: routes.speechTest(),
-          },
-          {
-            label: 'Users',
+            label: 'Patients',
             icon: FaUsers,
             to: routes.speechTest(),
           },
@@ -31,17 +27,12 @@ const AdminDashboardLayout = ({ children }: AdminDashboardLayoutProps) => {
       },
       {
         id: 'materials',
-        name: 'Materials',
+        name: 'Workflows',
         links: [
           {
-            label: 'Materials',
-            icon: GiJigsawPiece,
-            to: routes.speechTest(),
-          },
-          {
-            label: 'Material Units',
-            icon: GiJigsawBox,
-            to: routes.speechTest(),
+            label: 'Analyses',
+            icon: SiCodesandbox,
+            to: '/daw'
           },
         ],
       },
@@ -53,7 +44,7 @@ const AdminDashboardLayout = ({ children }: AdminDashboardLayoutProps) => {
           {
             label: 'Change Organization',
             icon: FaExchangeAlt,
-            to: routes.speechTest(),
+            to: '/',
           },
         ],
       },

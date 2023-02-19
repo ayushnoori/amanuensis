@@ -1,18 +1,428 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = "native"
+model Allergies {
+  id           String    @id
+  start        DateTime? @db.Date
+  stop         Boolean?
+  patient      String?
+  encounter    String?
+  code         Int?
+  system       String?
+  description  String?
+  type         String?
+  category     String?
+  reaction1    Int?
+  description1 String?
+  severity1    String?
+  reaction2    Int?
+  description2 String?
+  severity2    String?
+  Patients     Patients? @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model CarePlans {
+  id                String      @id
+  start             DateTime?   @db.Date
+  stop              DateTime?   @db.Date
+  patient           String?
+  encounter         String?
+  code              Int?
+  description       String?
+  reasonCode        Int?
+  reasonDescription String?
+  Encounters        Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients          Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Claims {
+  id                                                String               @id
+  patient                                           String?
+  provider                                          String?
+  primaryPatientInsuranceId                         String?
+  secondaryPatientInsuranceId                       String?
+  departmentId                                      Int?
+  patientDepartmentId                               Int?
+  diagnosis1                                        BigInt?
+  diagnosis2                                        BigInt?
+  diagnosis3                                        BigInt?
+  diagnosis4                                        BigInt?
+  diagnosis5                                        Boolean?
+  diagnosis6                                        Boolean?
+  diagnosis7                                        Boolean?
+  diagnosis8                                        Boolean?
+  referringProviderId                               String?
+  appointmentId                                     String?
+  currentIllnessDate                                DateTime?            @db.Timestamptz(6)
+  serviceDate                                       DateTime?            @db.Timestamptz(6)
+  supervisingProviderId                             String?
+  status1                                           String?
+  status2                                           String?
+  statusp                                           String?
+  outstanding1                                      Int?
+  outstanding2                                      Int?
+  outstandingP                                      Int?
+  lastBilledDate1                                   DateTime?            @db.Timestamptz(6)
+  lastBilledDate2                                   DateTime?            @db.Timestamptz(6)
+  lastBilledDateP                                   DateTime?            @db.Timestamptz(6)
+  healthcareClaimTypeId1                            Int?
+  healthcareClaimTypeId2                            Int?
+  Encounters                                        Encounters?          @relation(fields: [appointmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients                                          Patients?            @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers_Claims_primaryPatientInsuranceIdToPayers   Payers?              @relation("Claims_primaryPatientInsuranceIdToPayers", fields: [primaryPatientInsuranceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers_Claims_providerToProviders              Providers?           @relation("Claims_providerToProviders", fields: [provider], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers_Claims_referringProviderIdToProviders   Providers?           @relation("Claims_referringProviderIdToProviders", fields: [referringProviderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers_Claims_secondaryPatientInsuranceIdToPayers Payers?              @relation("Claims_secondaryPatientInsuranceIdToPayers", fields: [secondaryPatientInsuranceId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers_Claims_supervisingProviderIdToProviders Providers?           @relation("Claims_supervisingProviderIdToProviders", fields: [supervisingProviderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ClaimsTransactions                                ClaimsTransactions[]
+}
+
+model ClaimsTransactions {
+  id                                                            String         @id
+  claimId                                                       String?
+  chargeId                                                      Int?
+  patient                                                       String?
+  type                                                          String?
+  amount                                                        Float?
+  method                                                        String?
+  fromDate                                                      DateTime?      @db.Timestamptz(6)
+  toDate                                                        DateTime?      @db.Timestamptz(6)
+  placeOfService                                                String?
+  procedureCode                                                 BigInt?
+  modifier1                                                     Boolean?
+  modifier2                                                     Boolean?
+  diagnosisRef1                                                 Int?
+  diagnosisRef2                                                 Int?
+  diagnosisRef3                                                 Int?
+  diagnosisRef4                                                 Int?
+  units                                                         Int?
+  departmentId                                                  Int?
+  notes                                                         String?
+  unitAmount                                                    Float?
+  transferOutId                                                 Int?
+  transferType                                                  String?
+  payments                                                      Float?
+  adjustments                                                   Float?
+  transfers                                                     Float?
+  outstanding                                                   Float?
+  appointmentId                                                 String?
+  lineNote                                                      Boolean?
+  patientInsuranceId                                            String?
+  feeScheduleId                                                 Int?
+  provider                                                      String?
+  supervisingProviderId                                         String?
+  Encounters                                                    Encounters?    @relation(fields: [appointmentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Claims                                                        Claims?        @relation(fields: [claimId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients                                                      Patients?      @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Organizations                                                 Organizations? @relation(fields: [placeOfService], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers_ClaimsTransactions_providerToProviders              Providers?     @relation("ClaimsTransactions_providerToProviders", fields: [provider], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers_ClaimsTransactions_supervisingProviderIdToProviders Providers?     @relation("ClaimsTransactions_supervisingProviderIdToProviders", fields: [supervisingProviderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Conditions {
+  id          String      @id
+  start       DateTime?   @db.Date
+  stop        DateTime?   @db.Date
+  patient     String?
+  encounter   String?
+  code        BigInt?
+  description String?
+  Encounters  Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Devices {
+  id          String      @id
+  start       DateTime?   @db.Timestamptz(6)
+  stop        DateTime?   @db.Timestamptz(6)
+  patient     String?
+  encounter   String?
+  code        Int?
+  description String?
+  udi         String?
+  Encounters  Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Encounters {
+  id                 String               @id
+  start              DateTime?            @db.Timestamptz(6)
+  stop               DateTime?            @db.Timestamptz(6)
+  patient            String?
+  organization       String?
+  provider           String?
+  payer              String?
+  encounterClass     String?
+  code               BigInt?
+  description        String?
+  baseEncounterCost  Float?
+  totalClaimCost     Float?
+  payerCoverage      Float?
+  reasonCode         BigInt?
+  reasonDescription  String?
+  CarePlans          CarePlans[]
+  Claims             Claims[]
+  ClaimsTransactions ClaimsTransactions[]
+  Conditions         Conditions[]
+  Devices            Devices[]
+  Organizations      Organizations?       @relation(fields: [organization], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients           Patients?            @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers             Payers?              @relation(fields: [payer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Providers          Providers?           @relation(fields: [provider], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  ImagingStudies     ImagingStudies[]
+  Immunizations      Immunizations[]
+  Medications        Medications[]
+  Observations       Observations[]
+  Procedures         Procedures[]
+  Supplies           Supplies[]
+}
+
+model ImagingStudies {
+  id                  String      @id
+  date                DateTime?   @db.Timestamptz(6)
+  patient             String?
+  encounter           String?
+  seriesUid           String?
+  bodySiteCode        Int?
+  bodySiteDescription String?
+  modalityCode        String?
+  modalityDescription String?
+  instanceUid         String?
+  sopCode             String?
+  sopDescription      String?
+  procedureCode       Int?
+  Encounters          Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients            Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Immunizations {
+  id          String      @id
+  date        DateTime?   @db.Timestamptz(6)
+  patient     String?
+  encounter   String?
+  code        Int?
+  description String?
+  baseCost    Float?
+  Encounters  Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Medications {
+  id                String      @id
+  start             DateTime?   @db.Timestamptz(6)
+  stop              DateTime?   @db.Timestamptz(6)
+  patient           String?
+  payer             String?
+  encounter         String?
+  code              Int?
+  description       String?
+  baseCost          Float?
+  payerCoverage     Float?
+  dispenses         Int?
+  totalCost         Float?
+  reasonCode        Int?
+  reasonDescription String?
+  Encounters        Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients          Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers            Payers?     @relation(fields: [payer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Observations {
+  id          String      @id
+  date        DateTime?   @db.Timestamptz(6)
+  patient     String?
+  encounter   String?
+  category    String?
+  code        String?
+  description String?
+  value       String?
+  units       String?
+  type        String?
+  Encounters  Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Organizations {
+  id                 String               @id
+  name               String?
+  address            String?
+  city               String?
+  state              String?
+  zip                Int?
+  lat                Float?
+  lon                Float?
+  phone              String?
+  revenue            Float?
+  utilization        Int?
+  ClaimsTransactions ClaimsTransactions[]
+  Encounters         Encounters[]
+  Providers          Providers[]
+}
+
+model Patients {
+  id                 String               @id
+  birthDate          DateTime?            @db.Date
+  deathDate          Boolean?
+  ssn                String?
+  drivers            String?
+  passport           String?
+  prefix             String?
+  first              String?
+  last               String?
+  suffix             Boolean?
+  maiden             String?
+  marital            String?
+  race               String?
+  ethnicity          String?
+  gender             String?
+  birthPlace         String?
+  address            String?
+  city               String?
+  state              String?
+  county             String?
+  fips               Int?
+  zip                Int?
+  lat                Float?
+  lon                Float?
+  healthcareExpenses Float?
+  healthcareCoverage Float?
+  income             Int?
+  Allergies          Allergies[]
+  CarePlans          CarePlans[]
+  Claims             Claims[]
+  ClaimsTransactions ClaimsTransactions[]
+  Conditions         Conditions[]
+  Devices            Devices[]
+  Encounters         Encounters[]
+  ImagingStudies     ImagingStudies[]
+  Immunizations      Immunizations[]
+  Medications        Medications[]
+  Observations       Observations[]
+  PayerTransitions   PayerTransitions[]
+  Procedures         Procedures[]
+  Supplies           Supplies[]
+
+  // Manually added
+  questions PatientQuestion[]
+}
+
+model PayerTransitions {
+  id                                             String    @id
+  patient                                        String?
+  memberId                                       String?
+  startDate                                      DateTime? @db.Timestamptz(6)
+  endDate                                        DateTime? @db.Timestamptz(6)
+  payer                                          String?
+  secondaryPayer                                 String?
+  planOwnership                                  String?
+  ownerName                                      String?
+  Patients                                       Patients? @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers_PayerTransitions_payerToPayers          Payers?   @relation("PayerTransitions_payerToPayers", fields: [payer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Payers_PayerTransitions_secondaryPayerToPayers Payers?   @relation("PayerTransitions_secondaryPayerToPayers", fields: [secondaryPayer], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Payers {
+  id                                                       String             @id
+  name                                                     String?
+  ownership                                                String?
+  address                                                  Boolean?
+  city                                                     Boolean?
+  stateHeadquartered                                       Boolean?
+  zip                                                      Boolean?
+  phone                                                    Boolean?
+  amountCovered                                            Float?
+  amountUncovered                                          Float?
+  revenue                                                  Float?
+  coveredEncounters                                        Int?
+  uncoveredEncounters                                      Int?
+  coveredMedications                                       Int?
+  uncoveredMedications                                     Int?
+  coveredProcedures                                        Int?
+  uncoveredProcedures                                      Int?
+  coveredImmunizations                                     Int?
+  uncoveredImmunizations                                   Int?
+  uniqueCustomers                                          Int?
+  qolsAvg                                                  Float?
+  memberMonths                                             Int?
+  Claims_Claims_primaryPatientInsuranceIdToPayers          Claims[]           @relation("Claims_primaryPatientInsuranceIdToPayers")
+  Claims_Claims_secondaryPatientInsuranceIdToPayers        Claims[]           @relation("Claims_secondaryPatientInsuranceIdToPayers")
+  Encounters                                               Encounters[]
+  Medications                                              Medications[]
+  PayerTransitions_PayerTransitions_payerToPayers          PayerTransitions[] @relation("PayerTransitions_payerToPayers")
+  PayerTransitions_PayerTransitions_secondaryPayerToPayers PayerTransitions[] @relation("PayerTransitions_secondaryPayerToPayers")
+}
+
+model Procedures {
+  id                String      @id
+  start             DateTime?   @db.Timestamptz(6)
+  stop              DateTime?   @db.Timestamptz(6)
+  patient           String?
+  encounter         String?
+  code              BigInt?
+  description       String?
+  baseCost          Float?
+  reasonCode        Int?
+  reasonDescription String?
+  Encounters        Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients          Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Providers {
+  id                                                                     String               @id
+  organization                                                           String?
+  name                                                                   String?
+  gender                                                                 String?
+  speciality                                                             String?
+  address                                                                String?
+  city                                                                   String?
+  state                                                                  String?
+  zip                                                                    Int?
+  lat                                                                    Float?
+  lon                                                                    Float?
+  encounters                                                             Int?
+  procedures                                                             Int?
+  Claims_Claims_providerToProviders                                      Claims[]             @relation("Claims_providerToProviders")
+  Claims_Claims_referringProviderIdToProviders                           Claims[]             @relation("Claims_referringProviderIdToProviders")
+  Claims_Claims_supervisingProviderIdToProviders                         Claims[]             @relation("Claims_supervisingProviderIdToProviders")
+  ClaimsTransactions_ClaimsTransactions_providerToProviders              ClaimsTransactions[] @relation("ClaimsTransactions_providerToProviders")
+  ClaimsTransactions_ClaimsTransactions_supervisingProviderIdToProviders ClaimsTransactions[] @relation("ClaimsTransactions_supervisingProviderIdToProviders")
+  Encounters                                                             Encounters[]
+  Organizations                                                          Organizations?       @relation(fields: [organization], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Supplies {
+  id          String      @id
+  date        DateTime?   @db.Date
+  patient     String?
+  encounter   String?
+  code        Int?
+  description String?
+  quantity    Int?
+  Encounters  Encounters? @relation(fields: [encounter], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+// Custom Questions
+model WorkflowPrompts {
+  id String @id @default(uuid())
+  name String
+  prompt String
+}
+
+model PatientQuestion {
+  id String @id @default(uuid())
+  patientId String
+  patient Patients @relation(fields: [patientId], references: [id])
+
+  question String
+  answer String?
+  askedAt DateTime
+  answeredAt DateTime
 }
