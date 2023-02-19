@@ -6,7 +6,7 @@ export const schema = gql`
     question: String!
     answer: String
     askedAt: DateTime!
-    answeredAt: DateTime!
+    answeredAt: DateTime
     pertient: Boolean!
   }
 

@@ -1,7 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { PatientQuestion } from 'types/graphql';
 
-import { navigate, routes } from '@redwoodjs/router';
+import { navigate, routes, useParams } from '@redwoodjs/router';
 import { useMutation } from '@redwoodjs/web';
 import { toast } from '@redwoodjs/web/toast';
 
@@ -26,6 +26,7 @@ const DELETE_PATIENT_QUESTION_MUTATION = gql`
 
 export default function PatientQuestionsList({ patientQuestions }) {
   const patientRoutes = usePatientRoutes();
+  const { userId } = useParams();
 
   const [deletePatientQuestion] = useMutation(DELETE_PATIENT_QUESTION_MUTATION, {
     onCompleted: () => {
@@ -37,7 +38,7 @@ export default function PatientQuestionsList({ patientQuestions }) {
     // This refetches the query on the list page. Read more about other ways to
     // update the cache over here:
     // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
-    refetchQueries: [{ query: QUERY }],
+    refetchQueries: [{ query: QUERY, variables: { userId } }],
     awaitRefetchQueries: true,
   });
 

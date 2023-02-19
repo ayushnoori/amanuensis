@@ -48,7 +48,32 @@ export const generateTextFromPatient = async (
       },
     },
   });
-  console.log(patient);
+
+  let patientText = '';
+  patientText += `Name: ${patient.prefix} ${patient.first} ${patient.last}\n`;
+  patientText += `Birth Date: ${patient.birthDate}\n`;
+  patientText += `Gender: ${patient.gender}\n`;
+  patientText += `Race: ${patient.race}\n`;
+  patientText += `Ethnicity: ${patient.ethnicity}\n\n`;
+
+  patientText += `MEDICAL ENCOUNTERS\n`;
+  for (let i = 0; i < patient.Encounters.length; i++) {
+    const encounter = patient.Encounters[i];
+    patientText += `Encounter Date: ${encounter.start}\n`;
+    patientText += `Provider: ${encounter.Providers.name}\n`;
+    patientText += `Visit Type: ${encounter.encounterClass}\n`;
+    patientText += `Condition: ${encounter.Conditions.map(
+      ({ description }) => description,
+    ).join(',')}\n`;
+    patientText += `Description: ${encounter.description} ${
+      encounter.reasonDescription ? 'for ' : ''
+    }${encounter.reasonDescription}\n`;
+    patientText += `Care Plan: ${encounter.CarePlans.map(
+      (cp) => `${cp.description} due to ${cp.reasonDescription}`,
+    ).join(',')}\n\n`;
+  }
+
+  console.log(patientText);
   return `
     Patient Name: John Doe
     Date of Visit: March 1, 2023

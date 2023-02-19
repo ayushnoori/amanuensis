@@ -50,7 +50,7 @@ export const scheduleAppointment: MutationResolvers['scheduleAppointment'] =
       pertient: true,
     }));
     const questions = await db.patientQuestion.createMany({
-      data: [processedQuestionList],
+      data: processedQuestionList,
     });
     console.log(questions);
     return '';
