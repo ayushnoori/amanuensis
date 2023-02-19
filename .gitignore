@@ -1,6 +1,18 @@
+# R project
+.Rhistory
+.Rproj.user
+
 # ignore all .DS_Store files
 .DS_Store
 */.DS_Store
+
+# ignore patient_data files, except those with .md extensions
+patient_data/*
+!patient_data/*.md
+
+# ignore secret keys, except those with .md extensions
+secrets/*
+!secrets/*.md
 
 # ignore BioGPT checkpoint directory
 checkpoints/*
