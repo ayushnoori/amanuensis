@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import { db } from 'src/lib/db';
 import { generateTextFromPatient } from './generate-text-from-patient';
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = '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';
 
 const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,

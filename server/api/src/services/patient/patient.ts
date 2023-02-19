@@ -21,7 +21,7 @@ export const patientSummary: QueryResolvers['patientSummary'] = async ({
   id,
 }): Promise<string> => {
   const summary = await generateSummary(id);
-  return;
+  return summary;
 };
 
 export const createPatients: MutationResolvers['createPatients'] = ({

@@ -215,6 +215,8 @@ export default function Patients({ patients }) {
     variables: { userId: routeParams.id },
   });
 
+  console.log(d);
+
   const isDoctor = !!routeParams.id;
 
   return (
@@ -223,14 +225,14 @@ export default function Patients({ patients }) {
         <Stack spacing="16">
           <Tabs size="lg" variant="with-line">
             <TabList>
-              <Tab>Schedule</Tab>
+              <Tab>{isDoctor ? 'Summary' : 'Schedule'}</Tab>
               <Tab>Bio Data</Tab>
               <Tab>Previous Encounters</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 {isDoctor ? (
-                  <p>{new String(d)}</p>
+                  <p>{new String(d.patientSummary)}</p>
                 ) : (
                   <Button
                     onClick={() =>
