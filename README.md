@@ -3,7 +3,7 @@
 
 # About
 
-AI-enabled physician assistant for automated clinical transcription, summarization, and EHR form filling. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
+AI-enabled physician assistant for automated clinical AI-enabled physician assistant for automated clinical summarization and question generation. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
 
 # Base Dependencies
 
