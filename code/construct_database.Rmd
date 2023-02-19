@@ -1,0 +1,128 @@
+---
+title: Construct Patient Database
+subtitle: Ayush Noori
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include = FALSE}
+# knitr::opts_knit$set(root.dir = normalizePath(""))
+```
+
+# Dependencies
+
+Load requisite packages and define directories. Note that this script uses my personal utilities package `brainstorm`, which can be downloaded via `devtools::install_github("ayushnoori/brainstorm")`.
+
+```{r load-packages, message=FALSE, warning=FALSE}
+
+# data manipulation
+library(data.table)
+library(purrr)
+library(magrittr)
+
+# relative file paths
+library(here)
+
+# R interface to Postgres
+library(DBI)
+library(RPostgres)
+
+# utility functions
+library(brainstorm)
+
+```
+
+Note that directories are relative to the R project path.
+
+```{r define-directores}
+
+# set directories
+data_dir = file.path("patient_data")
+
+```
+
+```{r file-reader}
+
+file_reader = function(file_name) {
+  
+  data_table = fread(file_name)
+  
+  return(data_table)
+  
+}
+
+```
+
+Read files.
+
+```{r read-files}
+
+# generate file list
+patient_files = list.files(data_dir, include.dirs = F, full.names = T, pattern = ".csv")
+
+# read files
+patient_data = map(patient_files, file_reader)
+names(patient_data) = gsub(".csv", "", basename(patient_files), fixed = T)
+
+```
+
+The tables are specified as follows.
+
+| File | Description |
+|------|-------------|
+| `allergies.csv` | Patient allergy data. |
+| `careplans.csv` | Patient care plan data, including goals. |
+| `claims.csv` | Patient claim data. |
+| `claims_transactions.csv` | Transactions per line item per claim. |
+| `conditions.csv` | Patient conditions or diagnoses. |
+| `devices.csv` | Patient-affixed permanent and semi-permanent devices. |
+| `encounters.csv` | Patient encounter data. |
+| `imaging_studies.csv` | Patient imaging metadata. |
+| `immunizations.csv` | Patient immunization data. |
+| `medications.csv` | Patient medication data. |
+| `observations.csv` | Patient observations including vital signs and lab reports. |
+| `organizations.csv` | Provider organizations including hospitals. |
+| `patients.csv` | Patient demographic data. |
+| `payer_transitions.csv` | Payer Transition data (i.e. changes in health insurance). |
+| `payers.csv` | Payer organization data. |
+| `procedures.csv` | Patient procedure data including surgeries. |
+| `providers.csv` | Clinicians that provide patient care. |
+| `supplies.csv` | Supplies used in the provision of care. |
+
+Write tables to PostgreSQL database.
+
+```{r write-database}
+
+# open connection
+con = dbConnect(drv = RPostgres::Postgres(), dbname = "amanuensis")
+
+# write tables
+for (i in 1:length(patient_data)) {
+  
+  # subset table
+  patient_data_table = patient_data[[i]]
+  table_name = names(patient_data)[i]
+  
+  # write to database
+  dbWriteTable(con, name = table_name, value = patient_data_table)
+  
+  # remove table
+  # dbRemoveTable(con, name = table_name)
+  
+}
+
+# write SQL queries to set keys
+queries = list(
+  "ALTER TABLE allergies ADD FOREIGN KEY (Patient) REFERENCES patient(PersonID);",
+  "ETC.",
+  "ETC."
+)
+  
+# disconnect from the database
+dbDisconnect(con)
+
+```
