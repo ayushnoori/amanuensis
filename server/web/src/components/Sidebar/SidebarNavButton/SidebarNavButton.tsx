@@ -14,7 +14,7 @@ export default function SidebarNavButton({
   to,
   ...buttonProps
 }: NavButtonProps) {
-  const matchInfo = useMatch(to);
+  // const matchInfo = useMatch(to);
 
   const onClick = () => {
     navigate(to);
@@ -25,7 +25,7 @@ export default function SidebarNavButton({
       variant="ghost"
       justifyContent="start"
       onClick={onClick}
-      aria-current={matchInfo.match ? 'page' : undefined}
+      // aria-current={matchInfo.match ? 'page' : undefined}
       {...buttonProps}
     >
       <HStack spacing="3">

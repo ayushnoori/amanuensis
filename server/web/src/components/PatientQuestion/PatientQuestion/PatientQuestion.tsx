@@ -3,6 +3,7 @@ import { useMutation } from '@redwoodjs/web';
 import { toast } from '@redwoodjs/web/toast';
 
 import BaseModelView from 'src/components/BaseModelView/BaseModelView';
+import usePatientRoutes from 'src/hooks/use-patient-routes';
 import {
   formatEnum,
   jsonDisplay,
@@ -19,10 +20,12 @@ const DELETE_PATIENT_QUESTION_MUTATION = gql`
 `;
 
 export default function PatientQuestion({ patientQuestion }) {
+  const patientRoutes = usePatientRoutes();
+
   const [deletePatientQuestion] = useMutation(DELETE_PATIENT_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('PatientQuestion deleted');
-      navigate(routes.patientQuestions());
+      navigate(patientRoutes.patientQuestions());
     },
     onError: (error) => {
       toast.error(error.message);
@@ -36,63 +39,63 @@ export default function PatientQuestion({ patientQuestion }) {
   };
 
   const data = [
-    
+
       {
         propertyId: 'id',
         label: 'Id',
-        
+
           value: patientQuestion.id,
-        
+
       },
-    
+
       {
         propertyId: 'patientId',
         label: 'Patient id',
-        
+
           value: patientQuestion.patientId,
-        
+
       },
-    
+
       {
         propertyId: 'question',
         label: 'Question',
-        
+
           value: patientQuestion.question,
-        
+
       },
-    
+
       {
         propertyId: 'answer',
         label: 'Answer',
-        
+
           value: patientQuestion.answer,
-        
+
       },
-    
+
       {
         propertyId: 'askedAt',
         label: 'Asked at',
-        
+
           value: timeTag(patientQuestion.askedAt),
-        
+
       },
-    
+
       {
         propertyId: 'answeredAt',
         label: 'Answered at',
-        
+
           value: timeTag(patientQuestion.answeredAt),
-        
+
       },
-    
+
       {
         propertyId: 'pertient',
         label: 'Pertient',
-        
+
           value: checkboxInputTag(patientQuestion.pertient),
-        
+
       },
-    
+
   ];
 
   return (

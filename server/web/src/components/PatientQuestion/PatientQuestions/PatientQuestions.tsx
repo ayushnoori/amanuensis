@@ -14,6 +14,7 @@ import {
   timeTag,
   checkboxInputTag,
 } from 'src/utils/display-functions';
+import usePatientRoutes from 'src/hooks/use-patient-routes';
 
 const DELETE_PATIENT_QUESTION_MUTATION = gql`
   mutation DeletePatientQuestionMutation($id: String!) {
@@ -24,6 +25,8 @@ const DELETE_PATIENT_QUESTION_MUTATION = gql`
 `;
 
 export default function PatientQuestionsList({ patientQuestions }) {
+  const patientRoutes = usePatientRoutes();
+
   const [deletePatientQuestion] = useMutation(DELETE_PATIENT_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('PatientQuestion deleted');
@@ -47,42 +50,42 @@ export default function PatientQuestionsList({ patientQuestions }) {
   const columnHelper = createColumnHelper<PatientQuestion>();
 
   const columns = [
-    
+
     columnHelper.accessor('id', {
       header: 'Id',
       cell: (id) => truncate(id.getValue()),
     }),
-    
+
     columnHelper.accessor('patientId', {
       header: 'Patient id',
       cell: (patientId) => truncate(patientId.getValue()),
     }),
-    
+
     columnHelper.accessor('question', {
       header: 'Question',
       cell: (question) => truncate(question.getValue()),
     }),
-    
+
     columnHelper.accessor('answer', {
       header: 'Answer',
       cell: (answer) => truncate(answer.getValue()),
     }),
-    
+
     columnHelper.accessor('askedAt', {
       header: 'Asked at',
       cell: (askedAt) => timeTag(askedAt.getValue()),
     }),
-    
+
     columnHelper.accessor('answeredAt', {
       header: 'Answered at',
       cell: (answeredAt) => timeTag(answeredAt.getValue()),
     }),
-    
+
     columnHelper.accessor('pertient', {
       header: 'Pertient',
       cell: (pertient) => checkboxInputTag(pertient.getValue()),
     }),
-    
+
   ];
 
   return (
@@ -90,8 +93,12 @@ export default function PatientQuestionsList({ patientQuestions }) {
       title="PatientQuestions"
       columns={columns}
       data={patientQuestions}
-      onRowView={(row) => navigate(routes.patientQuestion({ id: row.getValue('id') }))}
-      onRowEdit={(row) => navigate(routes.editPatientQuestion({ id: row.getValue('id') }))}
+      onRowView={(row) =>
+        navigate(patientRoutes.patientQuestion({ id: row.getValue('id') }))
+      }
+      onRowEdit={(row) =>
+        navigate(patientRoutes.editPatientQuestion({ id: row.getValue('id') }))
+      }
       onRowDelete={(row) => onDeleteClick(row.getValue('id'))}
     />
   );

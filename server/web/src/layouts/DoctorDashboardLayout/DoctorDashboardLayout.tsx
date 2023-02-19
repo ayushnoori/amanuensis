@@ -20,12 +20,12 @@ const DoctorDashboardLayout = ({ children }: DoctorDashboardLayoutProps) => {
           {
             label: 'Patients',
             icon: FaUsers,
-            to: routes.speechTest(),
+            to: routes.patient(),
           },
         ],
       },
       {
-        id: 'materials',
+        id: 'workflows',
         name: 'Workflows',
         links: [
           {

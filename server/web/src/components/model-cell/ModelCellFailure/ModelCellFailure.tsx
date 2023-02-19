@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react';
 
 import { CellFailureProps } from '@redwoodjs/web';
+import { useParams } from '@redwoodjs/router';
 
 export default function ModelCellFailure({ error }: CellFailureProps) {
   return (

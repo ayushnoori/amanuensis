@@ -9,6 +9,7 @@ import ModelCellFailure from 'src/components/model-cell/ModelCellFailure/ModelCe
 import ModelCellLoading from 'src/components/model-cell/ModelCellLoading/ModelCellLoading';
 import ModelDataWrapper from 'src/components/ModelDataWrapper/ModelDataWrapper';
 import PatientQuestionForm from 'src/components/PatientQuestion/PatientQuestionForm';
+import usePatientRoutes from 'src/hooks/use-patient-routes';
 
 export const QUERY = gql`
   query EditPatientQuestionById($id: String!) {
@@ -42,10 +43,12 @@ export const Loading = ModelCellLoading;
 export const Failure = ModelCellFailure;
 
 export const Success = ({ patientQuestion }: CellSuccessProps<EditPatientQuestionById>) => {
+  const patientRoutes = usePatientRoutes();
+
   const [updatePatientQuestion, { loading, error }] = useMutation(UPDATE_PATIENT_QUESTION_MUTATION, {
     onCompleted: () => {
       toast.success('PatientQuestion updated');
-      navigate(routes.patientQuestions());
+      navigate(patientRoutes.patientQuestions());
     },
     onError: (error) => {
       toast.error(error.message);
@@ -53,13 +56,13 @@ export const Success = ({ patientQuestion }: CellSuccessProps<EditPatientQuestio
   });
 
   const onSave = (input, id) => {
-    
+
     updatePatientQuestion({
       variables: {
         id,
-        
+
           input,
-        
+
       }
     });
   };

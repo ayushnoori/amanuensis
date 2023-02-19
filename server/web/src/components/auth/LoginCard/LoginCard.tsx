@@ -60,7 +60,7 @@ const LoginCard = () => {
 
       if (emailIdMap[data.email]) {
         return navigate(
-          routes.speechTest({ userId: emailIdMap[data.email] }),
+          routes.patientQuestions({ userId: emailIdMap[data.email] }),
         );
       }
 

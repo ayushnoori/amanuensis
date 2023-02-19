@@ -111,6 +111,7 @@ export const schema = gql`
     createPatients(input: CreatePatientsInput!): Patients! @requireAuth
     updatePatients(id: String!, input: UpdatePatientsInput!): Patients!
       @requireAuth
+    scheduleAppointment(userId: String!): String! @requireAuth
     deletePatients(id: String!): Patients! @requireAuth
   }
 `;

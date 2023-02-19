@@ -4,7 +4,7 @@ import { Link } from '@redwoodjs/router';
 
 export type ModelCellEmptyProps = {
   modelPluralName: string;
-  newModelRoute: string;
+  newModelRoute?: string;
 };
 
 export default function ModelCellEmpty({
@@ -14,14 +14,16 @@ export default function ModelCellEmpty({
   return (
     <Text textAlign="center">
       {`No ${modelPluralName} yet. `}
-      <ChakraLink
-        as={Link}
-        to={newModelRoute}
-        color="blue.400"
-        textDecoration="underline"
-      >
-        Create one?
-      </ChakraLink>
+      {newModelRoute && (
+        <ChakraLink
+          as={Link}
+          to={newModelRoute}
+          color="blue.400"
+          textDecoration="underline"
+        >
+          Create one?
+        </ChakraLink>
+      )}
     </Text>
   );
 }

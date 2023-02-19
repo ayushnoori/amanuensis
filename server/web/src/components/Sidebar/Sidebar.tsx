@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 import {
   Divider,
   Flex,
+  Skeleton,
   Stack,
   Text,
   useColorModeValue,
@@ -13,6 +14,7 @@ import {
 import Logo from './SidebarLogo/SidebarLogo';
 import NavButton, { NavButtonProps } from './SidebarNavButton/SidebarNavButton';
 import UserProfile from './SidebarUserProfile/SidebarUserProfile';
+import { useParams } from '@redwoodjs/router';
 
 export type SidebarLink = NavButtonProps;
 
@@ -33,15 +35,33 @@ export default function Sidebar({
   groups,
   bottomGroups,
 }: SidebarProps) {
-  const currentUser = {
-    name: 'Paul Tang',
-    photoUrl:
-      'https://scottsdaleinstitute.org/wp-content/uploads/Tang-Paul.jpg',
-    email: 'paul.tang@stanford.edu',
-    globalRoles: {
-      doctor: true,
+  const { userId } = useParams();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    if (userId) {
+
+      const patientUser = {
+        name: 'José Rodriguez',
+        email: 'jc.rodriguez@gmail.com',
+        globalRoles: {
+          patient: true,
+        },
+      };
+      setCurrentUser(patientUser);
+    } else {
+      const doctorUser = {
+        name: 'Paul Tang',
+        photoUrl:
+          'https://scottsdaleinstitute.org/wp-content/uploads/Tang-Paul.jpg',
+        email: 'paultang@stanford.edu',
+        globalRoles: {
+          doctor: true,
+        },
+      };
+      setCurrentUser(doctorUser);
     }
-  };
+  }, []);
 
   return (
     <Flex as="section" minH="100vh" bg="bg-canvas">
@@ -117,7 +137,11 @@ export default function Sidebar({
               </Fragment>
             ))}
             <Divider />
-            <UserProfile user={currentUser} />
+            {currentUser ? (
+              <UserProfile user={currentUser} />
+            ) : (
+              <Skeleton isLoaded={currentUser} height="4em" />
+            )}
           </Stack>
         </Stack>
       </Flex>

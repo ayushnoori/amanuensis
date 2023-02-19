@@ -7,10 +7,11 @@ import ModelCellEmpty from 'src/components/model-cell/ModelCellEmpty/ModelCellEm
 import ModelCellFailure from 'src/components/model-cell/ModelCellFailure/ModelCellFailure';
 import ModelCellLoading from 'src/components/model-cell/ModelCellLoading/ModelCellLoading';
 import PatientQuestions from 'src/components/PatientQuestion/PatientQuestions';
+import usePatientRoutes from '../../../hooks/use-patient-routes';
 
 export const QUERY = gql`
-  query FindPatientQuestions {
-    patientQuestions {
+  query FindPatientQuestions($userId: String!) {
+    patientQuestions: patientQuestionsByPatientId(id: $userId) {
       id
       patientId
       question
@@ -24,12 +25,13 @@ export const QUERY = gql`
 
 export const Loading = ModelCellLoading;
 
-export const Empty = () => (
-  <ModelCellEmpty
+export const Empty = () => {
+  const patientRoutes = usePatientRoutes();
+  return (<ModelCellEmpty
     modelPluralName="patientQuestions"
-    newModelRoute={routes.newPatientQuestion()}
-  />
-);
+    // newModelRoute={patientRoutes.newPatientQuestion()}
+  />);
+};
 
 export const Failure = ModelCellFailure;
 

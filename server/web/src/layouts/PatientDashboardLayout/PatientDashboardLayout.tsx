@@ -1,60 +1,52 @@
-import { FaExchangeAlt, FaUsers } from 'react-icons/fa';
-import { SiCodesandbox } from 'react-icons/si';
+import { FaUser } from 'react-icons/fa';
+import { BsQuestionSquareFill } from 'react-icons/bs';
 
 import { routes } from '@redwoodjs/router';
 
 import { SidebarProps } from 'src/components/Sidebar/Sidebar';
 import BaseDashboardLayout from 'src/layouts/BaseDashboardLayout/BaseDashboardLayout';
+import usePatientRoutes from 'src/hooks/use-patient-routes';
 
 type PatientDashboardLayoutProps = {
   children?: React.ReactNode;
 };
 
 const PatientDashboardLayout = ({ children }: PatientDashboardLayoutProps) => {
- const sidebarProps: SidebarProps = {
-   organizationName: 'Stanford General Hospital',
-   groups: [
-     {
-       id: 'general',
-       links: [
-         {
-           label: 'History',
-           icon: FaUsers,
-           to: routes.speechTest(),
-         },
-       ],
-     },
-     {
-       id: 'materials',
-       name: 'Workflows',
-       links: [
-         {
-           label: 'Analyses',
-           icon: SiCodesandbox,
-           to: '/daw',
-         },
-       ],
-     },
-   ],
-   bottomGroups: [
-     {
-       id: 'settings',
-       links: [
-         {
-           label: 'Change Organization',
-           icon: FaExchangeAlt,
-           to: '/',
-         },
-       ],
-     },
-   ],
- };
+  const patientRoutes = usePatientRoutes();
 
- return (
-   <BaseDashboardLayout sidebarProps={sidebarProps}>
-     {children}
-   </BaseDashboardLayout>
- );
+  const sidebarProps: SidebarProps = {
+    organizationName: 'Stanford General Hospital',
+    groups: [
+      {
+        id: 'general',
+        links: [
+          {
+            label: 'Profile',
+            icon: FaUser,
+            to: patientRoutes.profile(),
+          },
+        ],
+      },
+      {
+        id: 'appointments',
+        name: 'Appointments',
+        links: [
+          {
+            label: 'Questions',
+            icon: BsQuestionSquareFill,
+            to: patientRoutes.patientQuestions(),
+          },
+        ],
+      },
+    ],
+    bottomGroups: [],
+  };
+
+  return (
+    <BaseDashboardLayout sidebarProps={sidebarProps}>
+      {children}
+    </BaseDashboardLayout>
+  );
 };
 
 export default PatientDashboardLayout;

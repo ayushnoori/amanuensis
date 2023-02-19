@@ -422,7 +422,7 @@ model PatientQuestion {
   patient Patients @relation(fields: [patientId], references: [id])
   question String
   answer String?
-  askedAt DateTime
-  answeredAt DateTime
+  askedAt DateTime @default(now())
+  answeredAt DateTime?
   pertient Boolean
 }

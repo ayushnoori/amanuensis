@@ -4,6 +4,7 @@ import { toast } from '@redwoodjs/web/toast';
 
 import ModelDataWrapper from 'src/components/ModelDataWrapper/ModelDataWrapper';
 import PatientQuestionForm from 'src/components/PatientQuestion/PatientQuestionForm';
+import usePatientRoutes from '../../../hooks/use-patient-routes';
 
 const CREATE_PATIENT_QUESTION_MUTATION = gql`
   mutation CreatePatientQuestionMutation($input: CreatePatientQuestionInput!) {
@@ -14,11 +15,13 @@ const CREATE_PATIENT_QUESTION_MUTATION = gql`
 `;
 
 export default function NewPatientQuestion() {
+  const patientRoutes = usePatientRoutes();
+
   const [createPatientQuestion, { loading, error }] = useMutation(
     CREATE_PATIENT_QUESTION_MUTATION, {
       onCompleted: () => {
         toast.success('PatientQuestion created');
-        navigate(routes.patientQuestions());
+        navigate(patientRoutes.patientQuestions());
       },
       onError: (error) => {
         toast.error(error.message);
@@ -27,12 +30,12 @@ export default function NewPatientQuestion() {
   );
 
   const onSave = (input) => {
-    
+
     createPatientQuestion({
       variables: {
-        
+
         input,
-        
+
       },
     });
   };

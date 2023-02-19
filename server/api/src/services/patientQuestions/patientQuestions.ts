@@ -16,6 +16,14 @@ export const patientQuestion: QueryResolvers['patientQuestion'] = ({ id }) => {
   });
 };
 
+export const patientQuestionsByPatientId: QueryResolvers['patientQuestionsByPatientId'] = ({ id }) => {
+  return db.patientQuestion.findMany({
+    where: {
+      patientId: id,
+    }
+  });
+};
+
 export const createPatientQuestion: MutationResolvers['createPatientQuestion'] =
   ({ input }) => {
     return db.patientQuestion.create({

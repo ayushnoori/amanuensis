@@ -5,6 +5,7 @@ import type {
 } from 'types/graphql';
 
 import { db } from 'src/lib/db';
+import { generateQuestions } from './query-gpt';
 
 export const patient: QueryResolvers['patient'] = () => {
   return db.patients.findMany();
@@ -15,6 +16,12 @@ export const patients: QueryResolvers['patients'] = ({ id }) => {
     where: { id },
   });
 };
+
+// export const getPatientSummary: QueryResolvers['getPatientSummary'] = ({
+//   id,
+// }) => {
+//   const getPatientSummary;
+// };
 
 export const createPatients: MutationResolvers['createPatients'] = ({
   input,
@@ -33,6 +40,21 @@ export const updatePatients: MutationResolvers['updatePatients'] = ({
     where: { id },
   });
 };
+
+export const scheduleAppointment: MutationResolvers['scheduleAppointment'] =
+  async ({ userId }: { userId: string}) => {
+    const questionList: string[] = await generateQuestions(userId);
+    const processedQuestionList = questionList.map((q) => ({
+      patientId: userId,
+      question: q,
+      pertient: true,
+    }));
+    const questions = await db.patientQuestion.createMany({
+      data: [processedQuestionList],
+    });
+    console.log(questions);
+    return '';
+  };
 
 export const deletePatients: MutationResolvers['deletePatients'] = ({ id }) => {
   return db.patients.delete({
