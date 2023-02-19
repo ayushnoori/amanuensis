@@ -5,7 +5,7 @@ import type {
 } from 'types/graphql';
 
 import { db } from 'src/lib/db';
-import { generateQuestions } from './query-gpt';
+import { generateQuestions, generateSummary } from './query-gpt';
 
 export const patient: QueryResolvers['patient'] = () => {
   return db.patients.findMany();
@@ -17,11 +17,12 @@ export const patients: QueryResolvers['patients'] = ({ id }) => {
   });
 };
 
-// export const getPatientSummary: QueryResolvers['getPatientSummary'] = ({
-//   id,
-// }) => {
-//   const getPatientSummary;
-// };
+export const patientSummary: QueryResolvers['patientSummary'] = async ({
+  id,
+}): Promise<string> => {
+  const summary = await generateSummary(id);
+  return;
+};
 
 export const createPatients: MutationResolvers['createPatients'] = ({
   input,

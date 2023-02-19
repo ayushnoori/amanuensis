@@ -10,7 +10,7 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import { routes, navigate, useParams } from '@redwoodjs/router';
-import { useMutation } from '@redwoodjs/web';
+import { useMutation, useQuery } from '@redwoodjs/web';
 import { toast } from '@redwoodjs/web/toast';
 
 import BaseModelView from 'src/components/BaseModelView/BaseModelView';
@@ -32,6 +32,12 @@ const DELETE_PATIENTS_MUTATION = gql`
 const SCHEDULE_APPOINTMENT_MUTATION = gql`
   mutation ScheduleAppointmentMutation($userId: String!) {
     scheduleAppointment(userId: $userId)
+  }
+`;
+
+const QUERY = gql`
+  query GetSummary($userId: String!) {
+    patientSummary(id: $userId)
   }
 `;
 
@@ -203,6 +209,12 @@ export default function Patients({ patients }) {
     },
   ];
 
+
+
+  const { loading, error, data: d } = useQuery(QUERY, {
+    variables: { userId: routeParams.id },
+  });
+
   const isDoctor = !!routeParams.id;
 
   return (
@@ -218,7 +230,7 @@ export default function Patients({ patients }) {
             <TabPanels>
               <TabPanel>
                 {isDoctor ? (
-                  <p>SUMMARY SUMMARY SUMMARY</p>
+                  <p>{new String(d)}</p>
                 ) : (
                   <Button
                     onClick={() =>

@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "PatientQuestion" ALTER COLUMN "askedAt" SET DEFAULT CURRENT_TIMESTAMP,
-ALTER COLUMN "answeredAt" DROP NOT NULL;

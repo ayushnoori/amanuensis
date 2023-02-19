@@ -62,5 +62,5 @@ export const generateSummary = async (userId: string) => {
   const rawSummary = await queryGpt(
     textProfile + '\n\n' + questionsSection + prompt,
   );
-  return removeWhiteSpace(rawSummary).split('\n'); // Splits string into multiple objects
+  return removeWhiteSpace(rawSummary); // Splits string into multiple objects
 };
