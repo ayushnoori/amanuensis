@@ -3,7 +3,7 @@
 
 # About
 
-AI-enabled physician assistant for automated clinical AI-enabled physician assistant for automated clinical summarization and question generation. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
+AI-enabled physician assistant for automated clinical summarization and question generation. Empowering physicians to achieve accurate diagnoses and effective treatments. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
 
 # Base Dependencies
 
@@ -193,3 +193,5 @@ print(output)
 * [Iñaki Arango](mailto:inakiarango@college.harvard.edu)
 * [Addea Gupta](mailto:addeagupta@college.harvard.edu)
 * [Smriti Somasundaram](mailto:smritisomasundaram@college.harvard.edu)
+
+This project was completed during the [TreeHacks 2023](https://www.treehacks.com/) hackathon at Stanford University.
