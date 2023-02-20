@@ -1,14 +1,14 @@
 <img src='https://user-images.githubusercontent.com/43010710/219844570-3b4ff1c1-0bec-4009-a7b1-0c73eedf5789.png' width="500"/>
 
-# Summary
-
-AI-enabled physician assistant for automated clinical summarization and question generation. Empowering physicians to achieve accurate diagnoses and effective treatments. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
-
 # Winner at TreeHacks 2023
 Amanuensis was awarded the BIG IDEA: Patient Safety Technology Prize at [TreeHacks 2023](https://www.treehacks.com/), sponsored by the Pittsburgh Regional Health Initiative and the Patient Safety Technology Challenge. Learn more at [www.patientsafetytech.com](https://www.patientsafetytech.com/). We're grateful to the sponsors and judges for their consideration and recognition, and to the TreeHacks organizing team at Stanford University.
 
 ## Prize Description
 > We're in search of bold new thinking. This is an invitation to solve the problem of medical error that harms millions of U.S. patients, kills approximately 250,000 patients, and costs billions of dollars every year. We’re calling on TreeHacks teams to envision the best technology-enabled patient safety solution that has the potential to avert patient harm and save lives and will be awarding $2,000 to the top team. Your hack must align with one of the following five leading patient safety challenges facing health care across the continuum of care: Medication errors, procedural/surgical errors, errors during routine patient care (e.g. pressure ulcers, blood clots, falls), infections and diagnostic safety. Learn more about the problem and get access to resources to help your hack here.
+
+# Summary
+
+AI-enabled physician assistant for automated clinical summarization and question generation. Empowering physicians to achieve accurate diagnoses and effective treatments. Project for [TreeHacks 2023](https://www.treehacks.com/) at Stanford University.
 
 ## Problem Statement 💡
 
