@@ -228,7 +228,7 @@ print(output)
 
 This project was completed during the [TreeHacks 2023](https://www.treehacks.com/) hackathon at Stanford University.
 
-## References 📚
+# References 📚
 
 1. Noori, A. et al. Development and Evaluation of a Natural Language Processing Annotation Tool to Facilitate Phenotyping of Cognitive Status in Electronic Health Records: Diagnostic Study. *Journal of Medical Internet Research* **24**, e40384 (2022).
 
