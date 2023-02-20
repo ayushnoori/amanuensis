@@ -88,7 +88,7 @@ We carefully designed our solution to address a real-world problem: the need for
 ### Most Ethically Engaged Hack
 Patient privacy and safety are at the core of our hack. Thus, we invested significant effort in generating synthetic data records, which we provided to downstream language models in our web application. We also designed our web application to leave the database unexposed, and we plan to integrate Amanuensis into existing EHR systems to ensure that patient data is stored securely and is only accessible to authorized users.
 
-## References 📚
+# References 📚
 
 1. Noori, A. et al. Development and Evaluation of a Natural Language Processing Annotation Tool to Facilitate Phenotyping of Cognitive Status in Electronic Health Records: Diagnostic Study. *Journal of Medical Internet Research* **24**, e40384 (2022).
 
