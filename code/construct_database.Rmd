@@ -77,8 +77,13 @@ file_reader = function(file_name, label, camelCase = T) {
   # add primary keys
   if(label %in% c("Allergies", "Conditions", "Devices", "Immunizations", "Medications", "Observations", "PayerTransitions", "Procedures", "Supplies")) {
     data_table[, id := UUIDgenerate(n = nrow(data_table), output = "string")]
+    # data_table[, id := as.character(id)]
     setcolorder(data_table, "id")
   }
+  
+  # if ("patient" %in% colnames(data_table)) { data_table[, patient := as.character(patient)] }
+  # if ("encounter" %in% colnames(data_table)) { data_table[, encounter := as.character(encounter)] }
+  # if ("id" %in% colnames(data_table)) { data_table[, id := as.character(id)] }
   
   # no need to modify allergies, conditions, devices, observations, organizations, providers
   
