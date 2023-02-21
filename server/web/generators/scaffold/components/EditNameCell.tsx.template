@@ -1,0 +1,73 @@
+import type { Edit${singularPascalName}ById } from 'types/graphql';
+
+import { navigate, routes } from '@redwoodjs/router';
+import type { CellSuccessProps } from '@redwoodjs/web';
+import { useMutation } from '@redwoodjs/web';
+import { toast } from '@redwoodjs/web/toast';
+
+import ModelCellFailure from 'src/components/model-cell/ModelCellFailure/ModelCellFailure';
+import ModelCellLoading from 'src/components/model-cell/ModelCellLoading/ModelCellLoading';
+import ModelDataWrapper from 'src/components/ModelDataWrapper/ModelDataWrapper';
+import ${singularPascalName}Form from '${importComponentNameForm}';
+
+export const QUERY = gql`
+  query Edit${singularPascalName}ById($id: ${idType}!) {
+    ${singularCamelName}: ${singularCamelName}(id: $id) {<% columns.forEach(column => { %>
+      <%= column.name %><% }) %>
+    }
+  }
+`;
+const UPDATE_${singularConstantName}_MUTATION = gql`
+  mutation Update${singularPascalName}Mutation($id: ${idType}!, $input: Update${singularPascalName}Input!) {
+    update${singularPascalName}(id: $id, input: $input) {<% columns.forEach(column => { %>
+      <%= column.name %><% }) %>
+    }
+  }
+`;
+
+export const Loading = ModelCellLoading;
+
+export const Failure = ModelCellFailure;
+
+export const Success = ({ ${singularCamelName} }: CellSuccessProps<Edit${singularPascalName}ById>) => {
+  const [update${singularPascalName}, { loading, error }] = useMutation(UPDATE_${singularConstantName}_MUTATION, {
+    onCompleted: () => {
+      toast.success('${singularPascalName} updated');
+      navigate(routes.${pluralRouteName}());
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const onSave = (input, id) => {
+    <% if (intForeignKeys.length) { %>
+      const castInput = Object.assign(input, {
+        <% intForeignKeys.forEach(key => { %>
+          ${key}: parseInt(input.${key}),
+        <% }) %>
+      });
+    <% } %>
+    update${singularPascalName}({
+      variables: {
+        id,
+        <% if (intForeignKeys.length) { %>
+          input: castInput,
+        <% } else { %>
+          input,
+        <% } %>
+      }
+    });
+  };
+
+  return (
+    <ModelDataWrapper title="Edit ${singularPascalName}" subtitle={'ID: ' + ${singularCamelName}.id}>
+      <${singularPascalName}Form
+        ${singularCamelName}={${singularCamelName}}
+        onSave={onSave}
+        error={error}
+        loading={loading}
+      />
+    </ModelDataWrapper>
+  );
+}

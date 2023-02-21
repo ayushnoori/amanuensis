@@ -1,0 +1,68 @@
+import { createColumnHelper } from '@tanstack/react-table';
+import { ${singularPascalName} } from 'types/graphql';
+
+import { navigate, routes } from '@redwoodjs/router';
+import { useMutation } from '@redwoodjs/web';
+import { toast } from '@redwoodjs/web/toast';
+
+import BaseModelTable from 'src/components/BaseModelTable/BaseModelTable';
+import { QUERY } from '${importComponentNamesCell}';
+import {
+  formatEnum,
+  truncate,
+  jsonTruncate,
+  timeTag,
+  checkboxInputTag,
+} from 'src/utils/display-functions';
+
+const DELETE_${singularConstantName}_MUTATION = gql`
+  mutation Delete${singularPascalName}Mutation($id: ${idType}!) {
+    delete${singularPascalName}(id: $id) {
+      id
+    }
+  }
+`;
+
+export default function ${pluralPascalName}List({ ${pluralCamelName} }) {
+  const [delete${singularPascalName}] = useMutation(DELETE_${singularConstantName}_MUTATION, {
+    onCompleted: () => {
+      toast.success('${singularPascalName} deleted');
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    // This refetches the query on the list page. Read more about other ways to
+    // update the cache over here:
+    // https://www.apollographql.com/docs/react/data/mutations/#making-all-other-cache-updates
+    refetchQueries: [{ query: QUERY }],
+    awaitRefetchQueries: true,
+  });
+
+  const onDeleteClick = (id) => {
+    if (confirm('Are you sure you want to delete ${singularCamelName} ' + id + '?')) {
+      delete${singularPascalName}({ variables: { id } });
+    }
+  };
+
+  const columnHelper = createColumnHelper<${singularPascalName}>();
+
+  const columns = [
+    <% columns.forEach(column => { %>
+    columnHelper.accessor('${column.name}', {
+      header: '${column.label}',
+      cell: (${column.name}) => ${column.listDisplayFunction}(${column.name}.getValue()),
+    }),
+    <% }) %>
+  ];
+
+  return (
+    <BaseModelTable
+      title="${pluralPascalName}"
+      columns={columns}
+      data={${pluralCamelName}}
+      onRowView={(row) => navigate(routes.${singularRouteName}({ id: row.getValue('id') }))}
+      onRowEdit={(row) => navigate(routes.${editRouteName}({ id: row.getValue('id') }))}
+      onRowDelete={(row) => onDeleteClick(row.getValue('id'))}
+    />
+  );
+}
