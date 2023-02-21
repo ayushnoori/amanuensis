@@ -9,6 +9,7 @@
 # ignore patient_data files, except those with .md extensions
 patient_data/*
 !patient_data/*.md
+example-data/*
 
 # ignore secret keys, except those with .md extensions
 secrets/*
