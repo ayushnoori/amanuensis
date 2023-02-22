@@ -20,6 +20,7 @@ import {
   timeTag,
   checkboxInputTag,
 } from 'src/utils/display-functions';
+import IntelligentSummary from './IntelligentSummary';
 
 const DELETE_PATIENTS_MUTATION = gql`
   mutation DeletePatientsMutation($id: String!) {
@@ -209,14 +210,6 @@ export default function Patients({ patients }) {
     },
   ];
 
-
-
-  const { loading, error, data: d } = useQuery(QUERY, {
-    variables: { userId: routeParams.id },
-  });
-
-  console.log(d);
-
   const isDoctor = !!routeParams.id;
 
   return (
@@ -225,14 +218,14 @@ export default function Patients({ patients }) {
         <Stack spacing="16">
           <Tabs size="lg" variant="with-line">
             <TabList>
-              <Tab>{isDoctor ? 'Summary' : 'Schedule'}</Tab>
-              <Tab>Bio Data</Tab>
+              <Tab>{isDoctor ? 'Intelligence Summary' : 'Schedule'}</Tab>
+              <Tab>Patient Biography</Tab>
               <Tab>Previous Encounters</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 {isDoctor ? (
-                  <p>{new String(d.patientSummary)}</p>
+                  <IntelligentSummary />
                 ) : (
                   <Button
                     onClick={() =>

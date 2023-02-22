@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import { db } from 'src/lib/db';
 import { generateTextFromPatient } from './generate-text-from-patient';
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = process.env.OPEN_AI_KEY;
 
 const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,
@@ -17,7 +17,7 @@ export const queryGpt = async (prompt: string) => {
       max_tokens: 1000,
       top_p: 0.2,
     });
-    console.log(response);
+    // console.log(response);
     return response?.data?.choices[0]?.text ?? null;
   } catch (err) {
     console.error(err);
@@ -32,16 +32,16 @@ export const generateQuestions = async (userId: string): Promise<string[]> => {
   const textProfile = await generateTextFromPatient(userId);
   const prompt =
     'Given the above medical history of this patient, generate a list of questions that a physician should ask to the patientt to learn more about their medical condition and symptom progression:'; // TODO fill out prompt
-  console.log(textProfile + '\n\n' + prompt);
+  // console.log(textProfile + '\n\n' + prompt);
   const stringResponse = await queryGpt(textProfile + '\n\n' + prompt);
-  console.log(stringResponse);
+  // console.log(stringResponse);
   const arrayOfQuestions: string[] = removeWhiteSpace(stringResponse)
     .split('\n'); // Splits string into multiple objects
   return arrayOfQuestions;
 };
 
 export const generateSummary = async (userId: string) => {
-  const textProfile = generateTextFromPatient(userId);
+  const textProfile = await generateTextFromPatient(userId);
   const questions = await db.patientQuestion.findMany({
     where: {
       patientId: userId,
@@ -53,6 +53,7 @@ export const generateSummary = async (userId: string) => {
       answeredAt: true,
     },
   });
+  console.log(questions);
   const filteredQuestions = questions.filter((q) => !!q.answer);
   const questionsSection =
     'The following questions where asked to the patient before their visit and these where the answers:\n' +
@@ -62,5 +63,11 @@ export const generateSummary = async (userId: string) => {
   const rawSummary = await queryGpt(
     textProfile + '\n\n' + questionsSection + prompt,
   );
-  return removeWhiteSpace(rawSummary); // Splits string into multiple objects
+  return (
+    textProfile +
+    '\n\n' +
+    questionsSection +
+    '\n\n' +
+    removeWhiteSpace(rawSummary)
+  ); // Splits string into multiple objects
 };

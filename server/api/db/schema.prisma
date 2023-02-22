@@ -409,7 +409,6 @@ model Supplies {
   Patients    Patients?   @relation(fields: [patient], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-// Custom Questions
 model WorkflowPrompt {
   id String @id @default(uuid())
   name String
